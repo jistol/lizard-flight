@@ -1,15 +1,10 @@
-importScripts('./storyBoard.js');
-importScripts('./Lizard.js');
-importScripts('./BgCosmos.js');
-importScripts('./PlayManager.js');
-importScripts('./BasicBullet.js');
 
 class Viewer {
     initialize = canvas => {
         this.status = 'opening';
         this.canvas = canvas;
-        this.context = canvas.getContext('2d');
-        this.background = new BgCosmos(this.canvas);
+        this.context = getContext(this.canvas);
+        this.background = new BgCosmos(this.canvas, this.context);
     };
 
     playing = () => {
@@ -23,7 +18,7 @@ class Viewer {
     };
 
     opening = () => {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        clear(this.context);
         this.background.render();
         renderTxtView(this.canvas, storyBoard.txt.opening);
     };
@@ -33,7 +28,7 @@ class Viewer {
     };
 
     render = () => {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        clear(this.context);
         this.background.render();
         this.playManager.render();
         this.lizard.render();

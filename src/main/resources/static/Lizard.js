@@ -1,11 +1,11 @@
 class Lizard {
     constructor(canvas, bulletClazz) {
         this.canvas = canvas;
-        this.context = canvas.getContext('2d');
+        this.context = getContext(canvas);
         this.s = 3;
         this.r = 25;
-        this.x = this.canvas.width / 2;
-        this.y = this.canvas.height - this.r - 5;
+        this.x = rWidth / 2;
+        this.y = rHeight - this.r - 5;
         this.isDirectKeyPress = false;
         this.directKey = undefined;
         this.isInputKeyPress = false;

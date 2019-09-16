@@ -2,11 +2,15 @@
 const worker = new Worker('./worker.js');
 
 const onloadEvent = () => {
-    let canvasDoc = document.getElementById('mainCanvase');
+    let body = document.body;
+    let canvas = document.getElementById('mainCanvas');
+    canvas.width = body.clientWidth;
+    canvas.height = Math.min(body.clientWidth * 1.5, body.clientHeight);
+
     document.addEventListener('keydown', onkeyEvent('keydown'), false);
     document.addEventListener('keyup', onkeyEvent('keyup'), false);
 
-    const offscreen = canvasDoc.transferControlToOffscreen();
+    const offscreen = canvas.transferControlToOffscreen();
     worker.postMessage({ type : 'init', canvas : offscreen }, [offscreen]);
 };
 
@@ -25,6 +29,18 @@ const onkeyEvent = eventName => event => {
 const onunloadEvent = () => {
     worker.terminate();
 };
+
+
+(function(){
+    let body = document.body;
+    body.addEventListener('unload', onunloadEvent);
+    body.style.width = '100%';
+    body.style.height = '100%';
+    body.style.margin = '0';
+    body.style.padding = '0';
+
+    onloadEvent();
+})();
 
 
 

@@ -1,3 +1,9 @@
+importScripts('./storyBoard.js');
+importScripts('./Lizard.js');
+importScripts('./BgCosmos.js');
+importScripts('./PlayManager.js');
+importScripts('./BasicBullet.js');
+importScripts('./Util.js');
 importScripts('./Viewer.js');
 
 const viewer = new Viewer();
@@ -14,7 +20,9 @@ const render = time => {
 };
 const __events = {
     init : event => {
-        viewer.initialize(event.data.canvas);
+        let canvas = event.data.canvas;
+        contextScale(canvas);
+        viewer.initialize(canvas);
         requestAnimationFrame(render);
     },
     keyDirect : event => {
