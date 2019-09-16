@@ -39,6 +39,7 @@ class BgCosmos {
         }
 
         this.context.beginPath();
+        this.context.lineWidth = 0.7;
         this.starList.forEach(star => {
             this.drawStar(star.x, star.y, star.r);
         });

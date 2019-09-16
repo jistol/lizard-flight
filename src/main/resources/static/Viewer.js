@@ -14,6 +14,7 @@ class Viewer {
         this.lizard = new Lizard(this.canvas, BasicBullet);
         this.onKeyDirectEvent = this.lizard.onKeyDirectEvent;
         this.onKeyInputEvent = this.lizard.onKeyInputEvent;
+        this.onTouchEvent = this.lizard.onTouchEvent;
         this.playManager = new PlayManager(this.canvas, this.story.shift());
     };
 

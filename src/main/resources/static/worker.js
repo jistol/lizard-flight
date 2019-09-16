@@ -27,7 +27,7 @@ const __events = {
     },
     keyDirect : event => {
         let { eventName, key } = event.data;
-        viewer.onKeyDirectEvent(eventName, key);
+        (viewer.onKeyDirectEvent||function(){})(eventName, key);
     },
     keyInput : event => {
         let { eventName, key } = event.data;
@@ -35,6 +35,14 @@ const __events = {
             viewer.playing();
         } else {
             (viewer.onKeyInputEvent || function(){})(eventName, key);
+        }
+    },
+    touchEvent : event => {
+        let { eventName, x } = event.data;
+        if (eventName == 'touchend' && viewer.status != 'playing') {
+            viewer.playing();
+        } else {
+            (viewer.onTouchEvent || function(){})(eventName, x);
         }
     }
 };

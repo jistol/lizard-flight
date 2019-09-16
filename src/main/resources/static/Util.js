@@ -77,7 +77,6 @@ const contextScale = (canvas) => {
     let context = canvas.getContext('2d');
     let ratioX = canvas.width / rWidth;
     let ratioY = canvas.height / rHeight;
-    console.log(`${ratioX}, ${ratioY}`);
     context.scale(ratioX, ratioY);
 };
 
