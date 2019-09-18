@@ -74,13 +74,17 @@ class EnemyRow {
     constructor(canvas, clazz, option) {
         this.canvas = canvas;
         this.option = Object.assign({
-            r : 25,
-            y : -25,
-            s : 2.5,
+            r : 28,
+            y : -28,
+            s : 3.5,
             hp : 100,
+            unit : 5,
+            wait : 200,
+            nowait : false,
             bodyStyle : '#989898',
             bodyStrokeStyle : '#767676'
         }, option);
+        this.waitY = this.option.r + 15;
         this.enemyList = [];
         let x = 40;
         for (let i=0 ; i < 5 ; i++) {
@@ -88,12 +92,35 @@ class EnemyRow {
             this.enemyList[i] = new clazz(canvas, opt);
         }
         this.outOfView = false;
+        this.initWait = this.option.wait;
     }
 
     calPosition = () => {
-        this.option.y += this.option.s;
+        let { moveX, y } = this.calXY();
         this.outOfView = rHeight <= this.option.y - this.option.r;
-        this.enemyList.forEach(enemy => enemy.y = this.option.y);
+        this.enemyList.forEach(enemy => {
+            enemy.y = y;
+            enemy.x += moveX;
+        });
+    };
+
+    calXY = () => {
+        let moveX = 0;
+        let remainWait = this.option.wait > 0;
+
+        if (!this.option.nowait && remainWait) {
+            let pi = Math.PI / this.initWait * 2;
+            this.option.y += 1.5;
+            if (this.option.y > this.waitY) {
+                this.option.y = this.waitY;
+                this.option.wait--;
+                moveX = Math.sin((Math.PI / 2.5) + pi * this.option.wait) / 6;
+            }
+        } else {
+            this.option.y += this.option.s;
+        }
+
+        return { moveX : moveX, y : this.option.y };
     };
 
     render = () => {
@@ -155,15 +182,15 @@ class BasicEnemy {
 
     drawEyes = ({ context, x, y }, outerEyesStyle, innerEyesStyle) => {
         context.beginPath();
-        context.arc(x-10, y+10, 7, 0, Math.PI*2, false);
-        context.arc(x+10, y+10, 7, 0, Math.PI*2, false);
+        context.arc(x-12, y+10, 7, 0, Math.PI*2, false);
+        context.arc(x+12, y+10, 7, 0, Math.PI*2, false);
         context.fillStyle = outerEyesStyle;
         context.fill();
         context.closePath();
 
         context.beginPath();
-        context.arc(x-10, y+13, 2, 0, Math.PI*2, false);
-        context.arc(x+10, y+13, 2, 0, Math.PI*2, false);
+        context.arc(x-11, y+13, 2, 0, Math.PI*2, false);
+        context.arc(x+11, y+13, 2, 0, Math.PI*2, false);
         context.fillStyle = innerEyesStyle;
         context.fill();
         context.closePath();

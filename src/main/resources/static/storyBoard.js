@@ -1,60 +1,94 @@
 const enemyAbility = {
     GRAY : {
-        r : 25,
-        y : -25,
-        s : 3,
+        s : 5,
         hp : 100,
         score : 5,
         bodyStyle : '#989898',
         bodyStrokeStyle : '#909090'
     },
     YELLOW : {
-        r : 25,
-        y : -25,
-        s : 3,
+        s : 5,
         hp : 150,
         score : 7,
         bodyStyle : '#e9de12',
         bodyStrokeStyle : '#dbd018'
     },
     RED : {
-        r : 25,
-        y : -25,
-        s : 3.5,
-        hp : 200,
+        s : 5,
+        hp : 300,
         score : 10,
         bodyStyle : '#981a1e',
         bodyStrokeStyle : '#76514f'
     },
     SKY : {
-        r : 25,
-        y : -25,
-        s : 4.5,
+        s : 5.5,
         hp : 150,
         score : 15,
+        nowait : true,
         bodyStyle : '#09bac3',
         bodyStrokeStyle : '#557376'
     },
     GOLD : {
-        r : 25,
-        y : -25,
-        s : 2.5,
-        hp : 300,
+        s : 3.5,
+        hp : 550,
         score : 17,
+        wait : 300,
         bodyStyle : '#c39834',
         bodyStrokeStyle : '#764e21'
     },
     WHITE : {
-        r : 25,
-        y : -25,
-        s : 5.5,
-        hp : 100,
+        s : 7,
+        hp : 150,
         score : 15,
+        nowait : true,
         bodyStyle : '#beaec3',
         bodyStrokeStyle : '#f7f6ff'
+    },
+    BLUE : {
+        s : 6.5,
+        hp : 450,
+        score : 15,
+        wait : 100,
+        bodyStyle : '#383dfb',
+        bodyStrokeStyle : '#7a98ff'
+    },
+    ORANGE : {
+        s : 7.5,
+        hp : 350,
+        score : 15,
+        wait : 100,
+        bodyStyle : '#fba100',
+        bodyStrokeStyle : '#ffe4b2'
     }
 };
 
+const story = (function(){
+    let { GRAY, YELLOW, RED, SKY, GOLD, WHITE, BLUE, ORANGE } = enemyAbility;
+    let genOpening = level => Object.assign({
+        message : 'Level ' + level,
+        bgStyle : 'rgba(0,128,0,0.2)',
+        fontStyle : '#ffdb2a'
+    });
+    let ending = {
+        message : 'MISSION COMPLETE',
+        bgStyle : 'rgba(0,128,0,0.2)',
+        fontStyle : '#ffdb2a'
+    };
+    let genStory = level => (clazz='BasicEnemy') => (...enemyList) => ({
+            opening : genOpening(level),
+            ending : ending,
+            enemyList : enemyList.map(enemy => ({clazz : clazz, option : enemy }))
+    });
+
+    return [
+        genStory(1)()(GRAY, SKY, GRAY, YELLOW, YELLOW, RED),
+        genStory(2)()(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY),
+        genStory(3)()(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD),
+        genStory(4)()(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE),
+        genStory(5)()(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE),
+        genStory(6)()(BLUE, GOLD, ORANGE, BLUE, GOLD, ORANGE, BLUE)
+    ];
+})();
 
 const storyBoard = {
     version : 1,
@@ -79,93 +113,5 @@ const storyBoard = {
             usePressKey : true
         }
     },
-    story : [
-        {
-            level : 1,
-            opening : {
-                message : 'Level 1',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            ending : {
-                message : 'MISSION COMPLETE',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            enemyList : [
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.YELLOW },
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.YELLOW }
-            ]
-        },
-        {
-            level : 2,
-            opening : {
-                message : 'Level 2',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            ending : {
-                message : 'MISSION COMPLETE',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            enemyList : [
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.YELLOW },
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.YELLOW },
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.RED },
-                { clazz : 'BasicEnemy', option : enemyAbility.RED }
-            ]
-        },
-        {
-            level : 3,
-            opening : {
-                message : 'Level 3',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            ending : {
-                message : 'MISSION COMPLETE',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            enemyList : [
-                { clazz : 'BasicEnemy', option : enemyAbility.SKY },
-                { clazz : 'BasicEnemy', option : enemyAbility.YELLOW },
-                { clazz : 'BasicEnemy', option : enemyAbility.RED },
-                { clazz : 'BasicEnemy', option : enemyAbility.YELLOW },
-                { clazz : 'BasicEnemy', option : enemyAbility.GRAY },
-                { clazz : 'BasicEnemy', option : enemyAbility.RED },
-                { clazz : 'BasicEnemy', option : enemyAbility.RED }
-            ]
-        },
-        {
-            level : 4,
-            opening : {
-                message : 'Level 4',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            ending : {
-                message : 'MISSION COMPLETE',
-                bgStyle : 'rgba(0,128,0,0.2)',
-                fontStyle : '#ffdb2a'
-            },
-            enemyList : [
-                { clazz : 'BasicEnemy', option : enemyAbility.RED },
-                { clazz : 'BasicEnemy', option : enemyAbility.SKY },
-                { clazz : 'BasicEnemy', option : enemyAbility.GOLD },
-                { clazz : 'BasicEnemy', option : enemyAbility.WHITE },
-                { clazz : 'BasicEnemy', option : enemyAbility.SKY },
-                { clazz : 'BasicEnemy', option : enemyAbility.RED },
-                { clazz : 'BasicEnemy', option : enemyAbility.WHITE },
-                { clazz : 'BasicEnemy', option : enemyAbility.GOLD }
-            ]
-        }
-    ]
+    story : story
 };

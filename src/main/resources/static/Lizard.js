@@ -3,7 +3,7 @@ class Lizard {
         this.canvas = canvas;
         this.context = getContext(canvas);
         this.s = 3;
-        this.r = 25;
+        this.r = 28;
         this.x = rWidth / 2;
         this.y = rHeight - this.r - 5;
         this.isDirectKeyPress = false;
@@ -54,7 +54,6 @@ class Lizard {
             if (this.directKey) {
                 this.x = (this.directKey == 'left' ? Math.max(x-s, r) : Math.min(x+s, rWidth - r));
             } else if (this.moveX) {
-                console.log(`moveX : ${this.moveX}`);
                 this.x = Math.max(r, Math.min(rWidth - r, x + this.moveX));
             }
         }
@@ -91,15 +90,15 @@ class Lizard {
     drawEyes = () => {
         let { x, y } = this;
         this.context.beginPath();
-        this.context.arc(x-12, y-10, 7, 0, Math.PI*2, false);
-        this.context.arc(x+12, y-10, 7, 0, Math.PI*2, false);
+        this.context.arc(x-13, y-10, 7, 0, Math.PI*2, false);
+        this.context.arc(x+13, y-10, 7, 0, Math.PI*2, false);
         this.context.fillStyle = '#b4ddfc';
         this.context.fill();
         this.context.closePath();
 
         this.context.beginPath();
-        this.context.arc(x-10, y-13, 2, 0, Math.PI*2, false);
-        this.context.arc(x+10, y-13, 2, 0, Math.PI*2, false);
+        this.context.arc(x-11, y-13, 2, 0, Math.PI*2, false);
+        this.context.arc(x+11, y-13, 2, 0, Math.PI*2, false);
         this.context.fillStyle = '#200e09';
         this.context.fill();
         this.context.closePath();

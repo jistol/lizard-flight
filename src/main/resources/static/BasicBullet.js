@@ -4,7 +4,7 @@ class BasicBullet {
         this.context = canvas.getContext('2d');
         this.seq = 0;
         this.s = 5;
-        this.r = 4;
+        this.r = 5;
         this.c = 70;
         this.damage = 50;
         this.animateTime = 10;
