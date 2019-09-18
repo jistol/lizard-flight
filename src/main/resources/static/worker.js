@@ -1,10 +1,10 @@
-importScripts('./storyBoard.js');
 importScripts('./Lizard.js');
 importScripts('./BgCosmos.js');
 importScripts('./PlayManager.js');
 importScripts('./BasicBullet.js');
 importScripts('./Util.js');
 importScripts('./Viewer.js');
+importScripts('./storyBoard.js');
 
 const viewer = new Viewer();
 const render = time => {

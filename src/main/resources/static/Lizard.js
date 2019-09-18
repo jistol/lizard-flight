@@ -68,7 +68,7 @@ class Lizard {
     };
 
     judgeCollision = (enemyRow) => {
-        let { y, r } = enemyRow.option;
+        let { y, r } = enemyRow.enemyData;
         let top = y - r, bottom = y + r;
         if (this.y - this.r <= bottom || this.y + this.r >= top) {
             this.isLive = !enemyRow.enemyList.some(e => isCollisionArc(e, this));

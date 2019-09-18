@@ -1,27 +1,31 @@
 const enemyAbility = {
     GRAY : {
-        s : 5,
+        clazz : BasicEnemy,
+        s : 4,
         hp : 100,
         score : 5,
         bodyStyle : '#989898',
         bodyStrokeStyle : '#909090'
     },
     YELLOW : {
-        s : 5,
+        clazz : BasicEnemy,
+        s : 4,
         hp : 150,
         score : 7,
         bodyStyle : '#e9de12',
         bodyStrokeStyle : '#dbd018'
     },
     RED : {
-        s : 5,
+        clazz : BasicEnemy,
+        s : 4,
         hp : 300,
         score : 10,
         bodyStyle : '#981a1e',
         bodyStrokeStyle : '#76514f'
     },
     SKY : {
-        s : 5.5,
+        clazz : BasicEnemy,
+        s : 5,
         hp : 150,
         score : 15,
         nowait : true,
@@ -29,7 +33,8 @@ const enemyAbility = {
         bodyStrokeStyle : '#557376'
     },
     GOLD : {
-        s : 3.5,
+        clazz : BasicEnemy,
+        s : 3,
         hp : 550,
         score : 17,
         wait : 300,
@@ -37,7 +42,8 @@ const enemyAbility = {
         bodyStrokeStyle : '#764e21'
     },
     WHITE : {
-        s : 7,
+        clazz : BasicEnemy,
+        s : 6,
         hp : 150,
         score : 15,
         nowait : true,
@@ -45,7 +51,8 @@ const enemyAbility = {
         bodyStrokeStyle : '#f7f6ff'
     },
     BLUE : {
-        s : 6.5,
+        clazz : BasicEnemy,
+        s : 5.5,
         hp : 450,
         score : 15,
         wait : 100,
@@ -53,7 +60,8 @@ const enemyAbility = {
         bodyStrokeStyle : '#7a98ff'
     },
     ORANGE : {
-        s : 7.5,
+        clazz : BasicEnemy,
+        s : 5.5,
         hp : 350,
         score : 15,
         wait : 100,
@@ -74,19 +82,19 @@ const story = (function(){
         bgStyle : 'rgba(0,128,0,0.2)',
         fontStyle : '#ffdb2a'
     };
-    let genStory = level => (clazz='BasicEnemy') => (...enemyList) => ({
+    let genStory = level => (...enemyList) => ({
             opening : genOpening(level),
             ending : ending,
-            enemyList : enemyList.map(enemy => ({clazz : clazz, option : enemy }))
+            enemyList : enemyList
     });
 
     return [
-        genStory(1)()(GRAY, SKY, GRAY, YELLOW, YELLOW, RED),
-        genStory(2)()(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY),
-        genStory(3)()(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD),
-        genStory(4)()(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE),
-        genStory(5)()(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE),
-        genStory(6)()(BLUE, GOLD, ORANGE, BLUE, GOLD, ORANGE, BLUE)
+        genStory(1)(GRAY, SKY, GRAY, YELLOW, YELLOW, RED),
+        genStory(2)(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY),
+        genStory(3)(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD),
+        genStory(4)(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE),
+        genStory(5)(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE),
+        genStory(6)(BLUE, GOLD, ORANGE, BLUE, GOLD, ORANGE, BLUE)
     ];
 })();
 

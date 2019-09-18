@@ -7,8 +7,7 @@ class PlayManager {
         this.status = 'opening';
         this.story = story;
         this.enemyList = (this.story.enemyList || []).map(data => {
-            let clazz = eval(data.clazz);
-            return new EnemyRow(canvas, clazz, data.option);
+            return new EnemyRow(canvas, data);
         });
         this.currentEnemy = this.enemyList.shift();
     }
@@ -58,7 +57,7 @@ class PlayManager {
             return {};
         }
 
-        let { y, r } = this.currentEnemy.option;
+        let { y, r } = this.currentEnemy.enemyData;
         let top = y - r, bottom = y + r;
         let collisionList = bulletList.filter(b => b.status == 'fire')
             .filter(b => b.y - b.r <= bottom || b.y + b.r >= top);
@@ -71,9 +70,10 @@ class PlayManager {
 }
 
 class EnemyRow {
-    constructor(canvas, clazz, option) {
+    constructor(canvas, enemyData) {
+        let clazz = enemyData.clazz;
         this.canvas = canvas;
-        this.option = Object.assign({
+        this.enemyData = Object.assign({
             r : 28,
             y : -28,
             s : 3.5,
@@ -83,21 +83,21 @@ class EnemyRow {
             nowait : false,
             bodyStyle : '#989898',
             bodyStrokeStyle : '#767676'
-        }, option);
-        this.waitY = this.option.r + 15;
+        }, enemyData);
+        this.waitY = this.enemyData.r + 25;
         this.enemyList = [];
         let x = 40;
         for (let i=0 ; i < 5 ; i++) {
-            let opt = Object.assign({}, this.option, { x : x + (i * 80) });
+            let opt = Object.assign({}, this.enemyData, { x : x + (i * 80) });
             this.enemyList[i] = new clazz(canvas, opt);
         }
         this.outOfView = false;
-        this.initWait = this.option.wait;
+        this.initWait = this.enemyData.wait;
     }
 
     calPosition = () => {
         let { moveX, y } = this.calXY();
-        this.outOfView = rHeight <= this.option.y - this.option.r;
+        this.outOfView = rHeight <= this.enemyData.y - this.enemyData.r;
         this.enemyList.forEach(enemy => {
             enemy.y = y;
             enemy.x += moveX;
@@ -106,21 +106,21 @@ class EnemyRow {
 
     calXY = () => {
         let moveX = 0;
-        let remainWait = this.option.wait > 0;
+        let remainWait = this.enemyData.wait > 0;
 
-        if (!this.option.nowait && remainWait) {
+        if (!this.enemyData.nowait && remainWait) {
             let pi = Math.PI / this.initWait * 2;
-            this.option.y += 1.5;
-            if (this.option.y > this.waitY) {
-                this.option.y = this.waitY;
-                this.option.wait--;
-                moveX = Math.sin((Math.PI / 2.5) + pi * this.option.wait) / 6;
+            this.enemyData.y += 2.5;
+            if (this.enemyData.y > this.waitY) {
+                this.enemyData.y = this.waitY;
+                this.enemyData.wait--;
+                moveX = Math.sin((Math.PI / 2.5) + pi * this.enemyData.wait) / 6;
             }
         } else {
-            this.option.y += this.option.s;
+            this.enemyData.y += this.enemyData.s;
         }
 
-        return { moveX : moveX, y : this.option.y };
+        return { moveX : moveX, y : this.enemyData.y };
     };
 
     render = () => {
