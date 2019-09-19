@@ -1,10 +1,17 @@
 const __initSleepTime = 100;
 
+const PlayStatus = {
+    opening : Symbol('opening'),
+    playing : Symbol('playing'),
+    ending : Symbol('ending'),
+    exit : Symbol('exit')
+};
+
 class PlayManager {
     constructor(canvas, story) {
         this.sleep = __initSleepTime;
         this.canvas = canvas;
-        this.status = 'opening';
+        this.status = PlayStatus.opening;
         this.story = story;
         this.enemyList = (this.story.enemyList || []).map(data => {
             return new EnemyRow(canvas, data);
@@ -12,20 +19,20 @@ class PlayManager {
         this.currentEnemy = this.enemyList.shift();
     }
 
-    opening = () => {
+    [PlayStatus.opening] = () => {
         renderTxtView(this.canvas, this.story.opening);
         this.sleep--;
         if (this.sleep < 1) {
-            this.status = 'playing';
+            this.status = PlayStatus.playing;
             this.sleep = __initSleepTime;
         }
     };
 
-    playing = () => {
+    [PlayStatus.playing] = () => {
         if (!this.currentEnemy || this.currentEnemy.outOfView) {
             this.currentEnemy = this.enemyList.shift();
             if (!this.currentEnemy) {
-                this.status = 'ending';
+                this.status = PlayStatus.ending;
                 return;
             }
         }
@@ -33,11 +40,11 @@ class PlayManager {
         this.currentEnemy.render();
     };
 
-    ending = () => {
+    [PlayStatus.ending] = () => {
         renderTxtView(this.canvas, this.story.ending);
         this.sleep--;
         if (this.sleep < 1) {
-            this.status = 'exit';
+            this.status = PlayStatus.exit;
             this.sleep = __initSleepTime;
         }
     };
@@ -47,7 +54,7 @@ class PlayManager {
     };
 
     calPosition = () => {
-        if (this.status == 'playing' && this.currentEnemy && !this.currentEnemy.outOfView) {
+        if (this.status == PlayStatus.playing && this.currentEnemy && !this.currentEnemy.outOfView) {
             this.currentEnemy.calPosition();
         }
     };
@@ -59,7 +66,7 @@ class PlayManager {
 
         let { y, r } = this.currentEnemy.enemyData;
         let top = y - r, bottom = y + r;
-        let collisionList = bulletList.filter(b => b.status == 'fire')
+        let collisionList = bulletList.filter(b => b.status == BulletStatus.fire)
             .filter(b => b.y - b.r <= bottom || b.y + b.r >= top);
         if (!collisionList || collisionList.length < 1) {
             return {};

@@ -1,7 +1,13 @@
+const ViewerStatus = {
+    opening : Symbol('opening'),
+    playing : Symbol('playing'),
+    ending : Symbol('ending'),
+    dead : Symbol('dead')
+};
 
 class Viewer {
     initialize = canvas => {
-        this.status = 'opening';
+        this.status = ViewerStatus.opening;
         this.canvas = canvas;
         this.context = getContext(this.canvas);
         this.background = new BgCosmos(this.canvas, this.context);
@@ -10,7 +16,7 @@ class Viewer {
     playing = () => {
         this.score = 0;
         this.story = storyBoard.story.concat();
-        this.status = 'playing';
+        this.status = ViewerStatus.playing;
         this.lizard = new Lizard(this.canvas, BasicBullet);
         this.onKeyDirectEvent = this.lizard.onKeyDirectEvent;
         this.onKeyInputEvent = this.lizard.onKeyInputEvent;
@@ -56,10 +62,10 @@ class Viewer {
     };
 
     judgeToNext = () => {
-        if (this.playManager.status == 'exit') {
+        if (this.playManager.status == PlayStatus.exit) {
             let story = this.story.shift();
             if (!story) {
-                this.status = 'ending';
+                this.status = ViewerStatus.ending;
                 return;
             }
             this.playManager = new PlayManager(this.canvas, story);
@@ -73,7 +79,7 @@ class Viewer {
 
         this.lizard.judgeCollision(this.playManager.currentEnemy);
         if (!this.lizard.isLive) {
-            this.status = 'dead';
+            this.status = ViewerStatus.dead;
             renderTxtView(this.canvas, storyBoard.txt.dead);
         }
     };
@@ -84,7 +90,7 @@ class Viewer {
             if (result && result.seqList && result.seqList.length > 0) {
                 bulletItem.bulletList = bulletItem.bulletList.map(b => {
                         if (result.seqList.some(seq => seq == b.seq)) {
-                            b.status = 'collision';
+                            b.status = BulletStatus.collision;
                         }
                         return b;
                     });

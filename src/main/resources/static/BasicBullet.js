@@ -21,7 +21,7 @@ class BasicBullet {
         }
 
         this.bulletList.push({
-            status : 'fire',
+            status : BulletStatus.fire,
             seq : this.seq++,
             x : initX,
             y : y,
@@ -35,13 +35,13 @@ class BasicBullet {
 
     calPosition = () => {
         let tmpList = this.bulletList.map(bullet => {
-                if (bullet.status == 'fire' && !bullet.outOfView) {
+                if (bullet.status == BulletStatus.fire && !bullet.outOfView) {
                     bullet.y -= this.s;
                     bullet.outOfView = bullet.y - bullet.r <= 0;
                 }
                 return bullet;
             })
-            .filter(bullet => bullet.status != 'destroy')
+            .filter(bullet => bullet.status != BulletStatus.destroy)
             .filter(bullet => !bullet.outOfView);
 
         if (tmpList.length < 1) {
@@ -58,9 +58,9 @@ class BasicBullet {
 
         this.bulletList.forEach(bullet => {
             switch (bullet.status) {
-                case 'fire' :
+                case BulletStatus.fire :
                     this.renderFire(bullet); break;
-                case 'collision' :
+                case BulletStatus.collision :
                     this.renderCollision(bullet); break;
             }
         });
@@ -83,7 +83,7 @@ class BasicBullet {
         renderBoom(this.context, '#c89e65', x, y, r * 0.8);
         renderBoom(this.context, '#c8c476', x, y, r * 0.4);
         if (bullet.animateTime-- <= 0) {
-            bullet.status = 'destroy';
+            bullet.status = BulletStatus.destroy;
         }
     };
 }
