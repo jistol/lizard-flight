@@ -3,6 +3,7 @@ importScripts('./BgCosmos.js');
 importScripts('./PlayManager.js');
 importScripts('./Bullet.js');
 importScripts('./BasicBullet.js');
+importScripts('./StrongBullet.js');
 importScripts('./Util.js');
 importScripts('./Viewer.js');
 importScripts('./storyBoard.js');

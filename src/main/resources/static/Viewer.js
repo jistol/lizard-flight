@@ -17,7 +17,7 @@ class Viewer {
         this.score = 0;
         this.story = storyBoard.story.concat();
         this.status = ViewerStatus.playing;
-        this.lizard = new Lizard(this.canvas, BasicBullet);
+        this.lizard = new Lizard(this.canvas);
         this.onKeyDirectEvent = this.lizard.onKeyDirectEvent;
         this.onKeyInputEvent = this.lizard.onKeyInputEvent;
         this.onTouchEvent = this.lizard.onTouchEvent;
@@ -85,20 +85,12 @@ class Viewer {
     };
 
     judgeCollisionWithBullet = () => {
-        let tmpList = this.lizard.bulletItemList.map(bulletItem => {
+        this.lizard.bulletItemList.forEach(bulletItem => {
             let result = this.playManager.judgeCollision(bulletItem.bulletList);
             if (result && result.seqList && result.seqList.length > 0) {
-                bulletItem.bulletList = bulletItem.bulletList.map(b => {
-                        if (result.seqList.some(seq => seq == b.seq)) {
-                            b.status = BulletStatus.collision;
-                        }
-                        return b;
-                    });
+                bulletItem.setupCollision(result.seqList);
                 this.score += result.score;
             }
-            return bulletItem;
         });
-
-        this.lizard.bulletItemList = tmpList;
     };
 }

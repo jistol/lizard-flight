@@ -1,5 +1,5 @@
 class Lizard {
-    constructor(canvas, bulletClazz) {
+    constructor(canvas) {
         this.canvas = canvas;
         this.context = getContext(canvas);
         this.s = 3;
@@ -11,8 +11,7 @@ class Lizard {
         this.moveX = undefined;
         this.isInputKeyPress = false;
         this.inputKey = undefined;
-        this.bulletClazz = bulletClazz;
-        this.bulletItemList = [ new bulletClazz(canvas) ];
+        this.bulletItemList = [ new StrongBullet(canvas), new BasicBullet(canvas) ];
         this.isLive = true;
     };
 
@@ -49,22 +48,34 @@ class Lizard {
     };
 
     calPosition = () => {
+        this.moveBody();
+        this.fireBullet();
+        this.bulletItemList.forEach(bulletItem => bulletItem.calPosition());
+    };
+
+    moveBody = () => {
+        if (!this.isDirectKeyPress) {
+            return;
+        }
+
         let { x, s, r } = this;
-        if (this.isDirectKeyPress) {
-            if (this.directKey) {
-                this.x = (this.directKey == 'left' ? Math.max(x-s, r) : Math.min(x+s, rWidth - r));
-            } else if (this.moveX) {
-                this.x = Math.max(r, Math.min(rWidth - r, x + this.moveX));
-            }
+        if (this.directKey) {
+            this.x = (this.directKey == 'left' ? Math.max(x-s, r) : Math.min(x+s, rWidth - r));
+        } else if (this.moveX) {
+            this.x = Math.max(r, Math.min(rWidth - r, x + this.moveX));
         }
+    };
 
-        if (this.bulletItemList.length > 0 && this.isInputKeyPress && this.inputKey == 'w') {
-            this.bulletItemList[0].registOne(this.x, this.y - this.r - 0.5);
+    fireBullet = () => {
+        if (this.isInputKeyPress && this.inputKey == 'w') {
+            let list = this.bulletItemList.filter(item => !item.isEmpty());
+            list[0].registOne(this.x, this.y - this.r - 0.5);
         }
+    };
 
-        this.bulletItemList.forEach(bulletItem => {
-            bulletItem.calPosition();
-        });
+    addBulletItem = (bulletItem) => {
+        this.bulletItemList.forEach(item => item.limit = 0);
+        this.bulletItemList.unshift(bulletItem);
     };
 
     judgeCollision = (enemyRow) => {
@@ -76,15 +87,11 @@ class Lizard {
     };
 
     render = () => {
-        this.bulletItemList.forEach(bulletItem => {
-            bulletItem.render();
-        });
+        this.bulletItemList.forEach(bulletItem => bulletItem.render());
         this.drawBody();
         this.drawEyes();
 
-        if (this.bulletItemList.length > 1) {
-            this.bulletItemList = this.bulletItemList.filter(bullet => !bullet.outOfView);
-        }
+        this.bulletItemList = this.bulletItemList.filter(bulletItem => !bulletItem.outOfView || !bulletItem.isEmpty());
     };
 
     drawEyes = () => {
