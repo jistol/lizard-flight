@@ -5,7 +5,7 @@ const BulletStatus = {
 };
 
 class Bullet {
-    constructor({ status = BulletStatus.fire, seq, x, y, r, damage, collisionTime = 7, outOfView = false, fireColor, fireStrokeColor }) {
+    constructor({ status = BulletStatus.fire, seq, x, y, r, damage, collisionTime = 7, outOfView = false, fireColor, fireStrokeColor, option }) {
         this.seq = seq;
         this.status = status;
         this.x = x;
@@ -17,5 +17,6 @@ class Bullet {
         this.fireColor= fireColor;
         this.fireStrokeColor = fireStrokeColor;
         this.init = { x, y, r };
+        this.option = option;
     }
 }

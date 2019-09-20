@@ -5,7 +5,7 @@ class StrongBullet extends BasicBullet {
         this.s = 5.5;
         this.r = 6;
         this.fireTerm = 20;
-        this.damage = 75;
+        this.damage = 80;
         this.collisionTime = 7;
         this.outOfView = false;
         this.bulletList = [];

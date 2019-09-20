@@ -82,5 +82,4 @@ class Item {
         this.context.fillText(this.iconTxt, this.x, this.y + (this.fontSize - this.r + 1));
         this.context.closePath();
     };
-
 }

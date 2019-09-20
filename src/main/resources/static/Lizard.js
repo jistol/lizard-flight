@@ -99,6 +99,7 @@ class Lizard {
         this.drawEyes();
 
         this.bulletItemList = this.bulletItemList.filter(bulletItem => !bulletItem.outOfView || !bulletItem.isEmpty());
+        this.bulletItemList.filter(item => !item.isEmpty())[0].renderBulletInfo();
     };
 
     drawEyes = () => {

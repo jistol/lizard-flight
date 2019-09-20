@@ -19,6 +19,8 @@ class BasicBullet {
 
     isEmpty = () => !this.nolimit && this.limit < 1;
 
+    getBulletOption = (initX) => ({});
+
     registOne = (initX, initY) => {
         if (this.isEmpty()) {
             return;
@@ -35,7 +37,8 @@ class BasicBullet {
             collisionTime : this.collisionTime,
             outOfView : false,
             fireColor : this.fireColor,
-            fireStrokeColor : this.fireStrokeColor
+            fireStrokeColor : this.fireStrokeColor,
+            option : this.getBulletOption(initX)
         }));
         this.outOfView = false;
         this.limit -= this.nolimit ? 0 : 1;
@@ -74,6 +77,15 @@ class BasicBullet {
                     this.renderCollision(bullet); break;
             }
         });
+    };
+
+    renderBulletInfo = () => {
+        this.context.beginPath();
+        this.context.font = "15px Sans MS";
+        this.context.fillStyle = '#FFFFFF';
+        this.context.textAlign = "left";
+        this.context.fillText(`${this.iconTxt} : ${this.nolimit ? '-' : this.limit}`, rWidth - 55, 20);
+        this.context.closePath();
     };
 
     renderFire = ({ x, y, r, fireColor, fireStrokeColor }) => {

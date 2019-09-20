@@ -90,8 +90,8 @@ const story = (function(){
     });
 
     return [
-        genStory(1)(GRAY, SKY, GRAY, YELLOW, YELLOW, RED)(21, StrongBullet, FastBullet),
-        genStory(2)(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY)(100, StrongBullet, FastBullet),
+        genStory(1)(GRAY, SKY, GRAY, YELLOW, YELLOW, RED)(21, FastBullet, WaveBullet),
+        genStory(2)(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY)(50, StrongBullet, FastBullet, WaveBullet),
         genStory(3)(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD)(200, StrongBullet),
         genStory(4)(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE)(300, StrongBullet),
         genStory(5)(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE)(350, StrongBullet),
