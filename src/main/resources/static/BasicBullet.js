@@ -5,11 +5,12 @@ class BasicBullet {
         this.seq = 0;
         this.s = 5;
         this.r = 5;
-        this.c = 70;
+        this.fireTerm = 15;
         this.damage = 50;
         this.collisionTime = 7;
         this.outOfView = false;
         this.bulletList = [];
+        this.iconTxt = 'B';
         this.fireColor = '#dffca4';
         this.fireStrokeColor = '#fafe09';
         this.nolimit = true;
@@ -23,13 +24,7 @@ class BasicBullet {
             return;
         }
 
-        let { r, c } = this;
-        let y = initY - r - 0.5;
-        let lastBullet = this.bulletList[this.bulletList.length - 1];
-        if (lastBullet && lastBullet.y >= y - r - c) {
-            return;
-        }
-
+        let y = initY - this.r - 0.5;
         this.bulletList.push(new Bullet({
             status : BulletStatus.fire,
             seq : this.seq++,
@@ -82,7 +77,6 @@ class BasicBullet {
     };
 
     renderFire = ({ x, y, r, fireColor, fireStrokeColor }) => {
-
         this.context.beginPath();
         this.context.arc(x, y, r, 0, Math.PI*2, false);
         this.context.fillStyle = fireColor;

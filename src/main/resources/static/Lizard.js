@@ -12,6 +12,7 @@ class Lizard {
         this.isInputKeyPress = false;
         this.inputKey = undefined;
         this.bulletItemList = [ new StrongBullet(canvas), new BasicBullet(canvas) ];
+        this.fireTerm = 0;
         this.isLive = true;
     };
 
@@ -67,15 +68,21 @@ class Lizard {
     };
 
     fireBullet = () => {
+        if (this.fireTerm > 0) {
+            this.fireTerm--;
+            return;
+        }
+
         if (this.isInputKeyPress && this.inputKey == 'w') {
             let list = this.bulletItemList.filter(item => !item.isEmpty());
             list[0].registOne(this.x, this.y - this.r - 0.5);
+            this.fireTerm = list[0].fireTerm;
         }
     };
 
-    addBulletItem = (bulletItem) => {
+    addBulletItem = (bullet) => {
         this.bulletItemList.forEach(item => item.limit = 0);
-        this.bulletItemList.unshift(bulletItem);
+        this.bulletItemList.unshift(bullet);
     };
 
     judgeCollision = (enemyRow) => {

@@ -11,6 +11,7 @@ class Viewer {
         this.canvas = canvas;
         this.context = getContext(this.canvas);
         this.background = new BgCosmos(this.canvas, this.context);
+        this.itemManager = new ItemManager(this.canvas);
     };
 
     playing = () => {
@@ -21,7 +22,8 @@ class Viewer {
         this.onKeyDirectEvent = this.lizard.onKeyDirectEvent;
         this.onKeyInputEvent = this.lizard.onKeyInputEvent;
         this.onTouchEvent = this.lizard.onTouchEvent;
-        this.playManager = new PlayManager(this.canvas, this.story.shift());
+
+        this.toNextStory();
     };
 
     opening = () => {
@@ -39,11 +41,13 @@ class Viewer {
         this.background.render();
         this.playManager.render();
         this.lizard.render();
+        this.itemManager.render();
         this.renderScore();
 
         this.calPosition();
         this.judgeCollisionWithBullet();
         this.judgeCollisionWithLizard();
+        this.itemManager.judgeCollision(this.lizard);
         this.judgeToNext();
     };
 
@@ -61,14 +65,19 @@ class Viewer {
         this.playManager.calPosition();
     };
 
+    toNextStory = () => {
+        let story = this.story.shift();
+        if (!story) {
+            this.status = ViewerStatus.ending;
+            return;
+        }
+        this.playManager = new PlayManager(this.canvas, story);
+        this.itemManager.itemRule = story.itemRule;
+    };
+
     judgeToNext = () => {
         if (this.playManager.status == PlayStatus.exit) {
-            let story = this.story.shift();
-            if (!story) {
-                this.status = ViewerStatus.ending;
-                return;
-            }
-            this.playManager = new PlayManager(this.canvas, story);
+            this.toNextStory();
         }
     };
 
@@ -89,8 +98,14 @@ class Viewer {
             let result = this.playManager.judgeCollision(bulletItem.bulletList);
             if (result && result.seqList && result.seqList.length > 0) {
                 bulletItem.setupCollision(result.seqList);
-                this.score += result.score;
+                this.addScore(result.score);
             }
         });
     };
+
+    addScore = score => {
+        let bScore = this.score, aScore = this.score + score;
+        this.itemManager.changeScore(bScore, aScore);
+        this.score = aScore;
+    }
 }

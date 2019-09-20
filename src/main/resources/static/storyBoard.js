@@ -82,19 +82,20 @@ const story = (function(){
         bgStyle : 'rgba(0,128,0,0.2)',
         fontStyle : '#ffdb2a'
     };
-    let genStory = level => (...enemyList) => ({
+    let genStory = level => (...enemyList) => (step, ...items) => ({
             opening : genOpening(level),
             ending : ending,
+            itemRule : { step : step, itemList : items},
             enemyList : enemyList
     });
 
     return [
-        genStory(1)(GRAY, SKY, GRAY, YELLOW, YELLOW, RED),
-        genStory(2)(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY),
-        genStory(3)(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD),
-        genStory(4)(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE),
-        genStory(5)(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE),
-        genStory(6)(BLUE, GOLD, ORANGE, BLUE, GOLD, ORANGE, BLUE)
+        genStory(1)(GRAY, SKY, GRAY, YELLOW, YELLOW, RED)(21, StrongBullet, FastBullet),
+        genStory(2)(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY)(100, StrongBullet, FastBullet),
+        genStory(3)(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD)(200, StrongBullet),
+        genStory(4)(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE)(300, StrongBullet),
+        genStory(5)(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE)(350, StrongBullet),
+        genStory(6)(BLUE, GOLD, ORANGE, BLUE, GOLD, ORANGE, BLUE)(400, StrongBullet)
     ];
 })();
 

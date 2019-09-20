@@ -1,8 +1,11 @@
+importScripts('./Animation.js');
+importScripts('./ItemManager.js');
 importScripts('./Lizard.js');
 importScripts('./BgCosmos.js');
 importScripts('./PlayManager.js');
 importScripts('./Bullet.js');
 importScripts('./BasicBullet.js');
+importScripts('./FastBullet.js');
 importScripts('./StrongBullet.js');
 importScripts('./Util.js');
 importScripts('./Viewer.js');
