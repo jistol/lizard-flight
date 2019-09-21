@@ -11,7 +11,7 @@ class Lizard {
         this.moveX = undefined;
         this.isInputKeyPress = false;
         this.inputKey = undefined;
-        this.bulletItemList = [ new StrongBullet(canvas), new BasicBullet(canvas) ];
+        this.bulletItemList = [ new QuintupleBullet(canvas), new BasicBullet(canvas) ];
         this.fireTerm = 0;
         this.isLive = true;
     };
@@ -74,15 +74,21 @@ class Lizard {
         }
 
         if (this.isInputKeyPress && this.inputKey == 'w') {
-            let list = this.bulletItemList.filter(item => !item.isEmpty());
-            list[0].registOne(this.x, this.y - this.r - 0.5);
-            this.fireTerm = list[0].fireTerm;
+            this.currentBulletItem().registOne(this.x, this.y - this.r - 0.5);
+            this.fireTerm = this.currentBulletItem().fireTerm;
         }
     };
 
+    currentBulletItem = () => this.bulletItemList.filter(item => !item.isEmpty())[0];
+
     addBulletItem = (bullet) => {
-        this.bulletItemList.forEach(item => item.limit = 0);
-        this.bulletItemList.unshift(bullet);
+        let curBullet = this.currentBulletItem();
+        if (bullet.constructor.name == curBullet.constructor.name) {
+            curBullet.limit += bullet.limit;
+        } else {
+            this.bulletItemList.forEach(item => item.limit = 0);
+            this.bulletItemList.unshift(bullet);
+        }
     };
 
     judgeCollision = (enemyRow) => {

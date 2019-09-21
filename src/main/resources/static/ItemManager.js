@@ -76,7 +76,7 @@ class Item {
         this.context.strokeStyle = this.fireStrokeColor;
         this.context.lineWidth = 3;
         this.context.stroke();
-        this.context.fillStyle = '#00FF00';
+        this.context.fillStyle = '#000000';
         this.context.textAlign = "center";
         this.context.font = `${this.fontSize}px Sans MS`;
         this.context.fillText(this.iconTxt, this.x, this.y + (this.fontSize - this.r + 1));

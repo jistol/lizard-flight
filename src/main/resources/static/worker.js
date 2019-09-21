@@ -6,6 +6,7 @@ importScripts('./PlayManager.js');
 importScripts('./Bullet.js');
 importScripts('./BasicBullet.js');
 importScripts('./WaveBullet.js');
+importScripts('./QuintupleBullet.js');
 importScripts('./FastBullet.js');
 importScripts('./StrongBullet.js');
 importScripts('./Util.js');

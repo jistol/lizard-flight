@@ -6,6 +6,7 @@ class BasicBullet {
         this.s = 5;
         this.r = 5;
         this.fireTerm = 15;
+        this.fireUnit = 1;
         this.damage = 50;
         this.collisionTime = 7;
         this.outOfView = false;
@@ -19,7 +20,7 @@ class BasicBullet {
 
     isEmpty = () => !this.nolimit && this.limit < 1;
 
-    getBulletOption = (initX) => ({});
+    postConstructBullet = (bullet, i) => ({});
 
     registOne = (initX, initY) => {
         if (this.isEmpty()) {
@@ -27,19 +28,23 @@ class BasicBullet {
         }
 
         let y = initY - this.r - 0.5;
-        this.bulletList.push(new Bullet({
-            status : BulletStatus.fire,
-            seq : this.seq++,
-            x : initX,
-            y : y,
-            r : this.r,
-            damage : this.damage,
-            collisionTime : this.collisionTime,
-            outOfView : false,
-            fireColor : this.fireColor,
-            fireStrokeColor : this.fireStrokeColor,
-            option : this.getBulletOption(initX)
-        }));
+        for (let i=0 ; i < this.fireUnit ; i++) {
+            let bullet = new Bullet({
+                status : BulletStatus.fire,
+                seq : this.seq++,
+                x : initX,
+                y : y,
+                r : this.r,
+                damage : this.damage,
+                collisionTime : this.collisionTime,
+                outOfView : false,
+                fireColor : this.fireColor,
+                fireStrokeColor : this.fireStrokeColor,
+                fireSeq : i
+            });
+            this.postConstructBullet(bullet, i);
+            this.bulletList.push(bullet);
+        }
         this.outOfView = false;
         this.limit -= this.nolimit ? 0 : 1;
     };

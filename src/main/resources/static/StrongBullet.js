@@ -2,10 +2,10 @@ class StrongBullet extends BasicBullet {
     constructor(canvas) {
         super(canvas);
         this.seq = 0;
-        this.s = 5.5;
-        this.r = 6;
-        this.fireTerm = 20;
-        this.damage = 80;
+        this.s = 7.5;
+        this.r = 8.5;
+        this.fireTerm = 18;
+        this.damage = 100;
         this.collisionTime = 7;
         this.outOfView = false;
         this.bulletList = [];
@@ -13,6 +13,6 @@ class StrongBullet extends BasicBullet {
         this.fireColor = '#fc8351';
         this.fireStrokeColor = '#fe5f0d';
         this.nolimit = false;
-        this.limit = 10;
+        this.limit = 70;
     };
 }
