@@ -105,7 +105,7 @@ class Viewer {
 
     addScore = score => {
         let bScore = this.score, aScore = this.score + score;
-        this.itemManager.changeScore(bScore, aScore);
         this.score = aScore;
+        this.itemManager.changeScore(bScore, aScore);
     }
 }

@@ -1,15 +1,17 @@
-importScripts('./Animation.js');
+importScripts('./util/Animation.js');
+importScripts('./util/Util.js');
+importScripts('./background/BgCosmos.js');
 importScripts('./ItemManager.js');
 importScripts('./Lizard.js');
-importScripts('./BgCosmos.js');
-importScripts('./PlayManager.js');
-importScripts('./Bullet.js');
-importScripts('./BasicBullet.js');
-importScripts('./WaveBullet.js');
-importScripts('./QuintupleBullet.js');
-importScripts('./FastBullet.js');
-importScripts('./StrongBullet.js');
-importScripts('./Util.js');
+importScripts('./enemy/BasicEnemy.js');
+importScripts('./enemy/BasicPlay.js');
+importScripts('./enemy/PlayManager.js');
+importScripts('./bullet/Bullet.js');
+importScripts('./bullet/BasicBullet.js');
+importScripts('./bullet/WaveBullet.js');
+importScripts('./bullet/QuintupleBullet.js');
+importScripts('./bullet/FastBullet.js');
+importScripts('./bullet/StrongBullet.js');
 importScripts('./Viewer.js');
 importScripts('./storyBoard.js');
 
