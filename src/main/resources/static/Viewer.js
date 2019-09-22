@@ -82,11 +82,11 @@ class Viewer {
     };
 
     judgeCollisionWithLizard = () => {
-        if (!this.playManager.currentEnemy) {
+        if (!this.playManager.currentWave) {
             return;
         }
 
-        this.lizard.judgeCollision(this.playManager.currentEnemy);
+        this.lizard.judgeCollision(this.playManager.currentWave);
         if (!this.lizard.isLive) {
             this.status = ViewerStatus.dead;
             renderTxtView(this.canvas, storyBoard.txt.dead);

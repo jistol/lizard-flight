@@ -1,6 +1,8 @@
 const enemyAbility = {
+    EMPTY : {},
     GRAY : {
         clazz : BasicEnemy,
+        play : BasicPlay,
         s : 4,
         hp : 100,
         score : 5,
@@ -9,6 +11,7 @@ const enemyAbility = {
     },
     YELLOW : {
         clazz : BasicEnemy,
+        play : BasicPlay,
         s : 4,
         hp : 150,
         score : 7,
@@ -17,6 +20,7 @@ const enemyAbility = {
     },
     RED : {
         clazz : BasicEnemy,
+        play : BasicPlay,
         s : 4,
         hp : 300,
         score : 10,
@@ -25,15 +29,16 @@ const enemyAbility = {
     },
     SKY : {
         clazz : BasicEnemy,
+        play : NoWaitPlay,
         s : 5,
         hp : 150,
         score : 15,
-        nowait : true,
         bodyStyle : '#09bac3',
         bodyStrokeStyle : '#557376'
     },
     GOLD : {
         clazz : BasicEnemy,
+        play : BasicPlay,
         s : 3,
         hp : 550,
         score : 17,
@@ -43,15 +48,16 @@ const enemyAbility = {
     },
     WHITE : {
         clazz : BasicEnemy,
+        play : NoWaitPlay,
         s : 6,
         hp : 150,
         score : 15,
-        nowait : true,
         bodyStyle : '#beaec3',
         bodyStrokeStyle : '#f7f6ff'
     },
     BLUE : {
         clazz : BasicEnemy,
+        play : BasicPlay,
         s : 5.5,
         hp : 450,
         score : 15,
@@ -61,6 +67,7 @@ const enemyAbility = {
     },
     ORANGE : {
         clazz : BasicEnemy,
+        play : BasicPlay,
         s : 5.5,
         hp : 350,
         score : 15,
@@ -71,7 +78,7 @@ const enemyAbility = {
 };
 
 const story = (function(){
-    let { GRAY, YELLOW, RED, SKY, GOLD, WHITE, BLUE, ORANGE } = enemyAbility;
+    let { GRAY, YELLOW, RED, SKY, GOLD, WHITE, BLUE, ORANGE, EMPTY } = enemyAbility;
     let genOpening = level => Object.assign({
         message : 'Level ' + level,
         bgStyle : 'rgba(0,128,0,0.2)',
@@ -82,20 +89,20 @@ const story = (function(){
         bgStyle : 'rgba(0,128,0,0.2)',
         fontStyle : '#ffdb2a'
     };
-    let genStory = level => (...enemyList) => (step, ...items) => ({
+    let genStory = level => (...waveList) => (step, ...items) => ({
             opening : genOpening(level),
             ending : ending,
             itemRule : { step : step, itemList : items},
-            enemyList : enemyList
+            waveList : waveList
     });
+    let merge = (enemy, opt) => Object.assign({}, enemy, opt);
 
     return [
-        genStory(1)(GRAY, SKY, GRAY, YELLOW, YELLOW, RED)(21, FastBullet, WaveBullet),
-        genStory(2)(YELLOW, GRAY, RED, GRAY, YELLOW, RED, SKY)(50, StrongBullet, FastBullet, WaveBullet),
-        genStory(3)(SKY, YELLOW, RED, GOLD, WHITE, RED, GOLD)(200, StrongBullet),
-        genStory(4)(YELLOW, RED, SKY, GOLD, WHITE, WHITE, BLUE)(300, StrongBullet),
-        genStory(5)(RED, RED, SKY, BLUE, GOLD, WHITE, BLUE)(350, StrongBullet),
-        genStory(6)(BLUE, GOLD, ORANGE, BLUE, GOLD, ORANGE, BLUE)(400, StrongBullet)
+        genStory(1)(
+            [SKY, merge(SKY, {y:-48}), SKY, merge(SKY, {y:-48}), SKY],
+            [GRAY, SKY, EMPTY, EMPTY, YELLOW],
+            [GRAY, SKY, GRAY, YELLOW, YELLOW]
+        )(20, FastBullet, WaveBullet)
     ];
 })();
 

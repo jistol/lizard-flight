@@ -91,12 +91,8 @@ class Lizard {
         }
     };
 
-    judgeCollision = (enemyRow) => {
-        let { y, r } = enemyRow.enemyData;
-        let top = y - r, bottom = y + r;
-        if (this.y - this.r <= bottom || this.y + this.r >= top) {
-            this.isLive = !enemyRow.enemyList.some(e => isCollisionArc(e, this));
-        }
+    judgeCollision = (wave) => {
+        this.isLive = !(wave.enemyList||[]).filter(e => e.isLive).some(e => isCollisionArc(e, this));
     };
 
     render = () => {
