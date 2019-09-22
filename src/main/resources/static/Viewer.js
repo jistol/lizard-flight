@@ -62,7 +62,7 @@ class Viewer {
 
     calPosition = () => {
         this.lizard.calPosition();
-        this.playManager.calPosition();
+        this.playManager.calPosition(this.lizard);
     };
 
     toNextStory = () => {

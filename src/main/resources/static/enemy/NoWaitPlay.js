@@ -7,7 +7,7 @@ class NoWaitPlay {
         this.wait = this.initWait;
     }
 
-    calPosition = () => {
+    calPosition = (lizard) => {
         this.enemy.outOfView = rHeight <= this.enemy.y - this.enemy.r;
         this.enemy.y += this.enemy.s;
     };

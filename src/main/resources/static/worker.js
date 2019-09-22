@@ -6,6 +6,7 @@ importScripts('./Lizard.js');
 importScripts('./enemy/BasicEnemy.js');
 importScripts('./enemy/BasicPlay.js');
 importScripts('./enemy/NoWaitPlay.js');
+importScripts('./enemy/FollowPlay.js');
 importScripts('./enemy/PlayManager.js');
 importScripts('./bullet/Bullet.js');
 importScripts('./bullet/BasicBullet.js');

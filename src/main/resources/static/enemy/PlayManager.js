@@ -1,4 +1,3 @@
-const __initSleepTime = 100;
 
 const PlayStatus = {
     opening : Symbol('opening'),
@@ -9,7 +8,7 @@ const PlayStatus = {
 
 class PlayManager {
     constructor(canvas, story) {
-        this.sleep = __initSleepTime;
+        this.timer = undefined;
         this.canvas = canvas;
         this.status = PlayStatus.opening;
         this.story = story;
@@ -35,43 +34,47 @@ class PlayManager {
         return wave;
     };
 
+    doSleep = (time, callback) => {
+        if (this.timer) {
+            return;
+        }
+
+        this.timer = setTimeout(() => {
+            this.timer = undefined;
+            callback();
+        }, time);
+    };
+
     [PlayStatus.opening] = () => {
         renderTxtView(this.canvas, this.story.opening);
-        this.sleep--;
-        if (this.sleep < 1) {
-            this.status = PlayStatus.playing;
-            this.sleep = __initSleepTime;
-        }
+        this.doSleep(1500, () => this.status = PlayStatus.playing);
     };
 
     [PlayStatus.playing] = () => {
         if (!this.currentWave || this.currentWave.outOfView) {
-            this.currentWave = this.waveList.shift();
-            if (!this.currentWave) {
-                this.status = PlayStatus.ending;
-                return;
-            }
+            this.doSleep(700, () => {
+                this.currentWave = this.waveList.shift();
+                if (!this.currentWave) {
+                    this.status = PlayStatus.ending;
+                }
+            });
+        } else {
+            this.currentWave.enemyList.forEach(e => e.render());
         }
-
-        this.currentWave.enemyList.forEach(e => e.render());
     };
 
     [PlayStatus.ending] = () => {
         renderTxtView(this.canvas, this.story.ending);
-        this.sleep--;
-        if (this.sleep < 1) {
-            this.status = PlayStatus.exit;
-            this.sleep = __initSleepTime;
-        }
+        this.doSleep(1500, () => this.status = PlayStatus.exit);
     };
 
     render = () => {
         (this[this.status]||function(){})();
     };
 
-    calPosition = () => {
+    calPosition = (lizard) => {
         if (this.status == PlayStatus.playing && this.currentWave && !this.currentWave.outOfView) {
-            this.currentWave.enemyList.forEach(e => e.calPosition());
+            this.currentWave.enemyList.forEach(e => e.calPosition(lizard));
             this.flatCurrentWave();
         }
     };

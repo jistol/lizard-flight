@@ -20,7 +20,7 @@ const enemyAbility = {
     },
     RED : {
         clazz : BasicEnemy,
-        play : BasicPlay,
+        play : FollowPlay,
         s : 4,
         hp : 300,
         score : 10,
@@ -99,8 +99,10 @@ const story = (function(){
 
     return [
         genStory(1)(
-            [SKY, merge(SKY, {y:-48}), SKY, merge(SKY, {y:-48}), SKY],
-            [GRAY, SKY, EMPTY, EMPTY, YELLOW],
+            [GRAY, RED, GRAY, RED, GRAY],
+            [GRAY, YELLOW, EMPTY, YELLOW, GRAY],
+            [GRAY, merge(SKY, {y:-50}), GRAY, merge(SKY, {y:-50}), GRAY],
+            [SKY, merge(WHITE, {y:-120}), SKY, merge(WHITE, {y:-120}), SKY],
             [GRAY, SKY, GRAY, YELLOW, YELLOW]
         )(20, FastBullet, WaveBullet)
     ];
