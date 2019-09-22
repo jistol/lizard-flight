@@ -11,7 +11,7 @@ class Lizard {
         this.moveX = undefined;
         this.isInputKeyPress = false;
         this.inputKey = undefined;
-        this.bulletItemList = [ new WaveBullet(canvas), new BasicBullet(canvas) ];
+        this.bulletItemList = [ new BasicBullet(canvas) ];
         this.fireTerm = 0;
         this.isLive = true;
     };

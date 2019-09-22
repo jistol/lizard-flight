@@ -2,18 +2,17 @@ class FastBullet extends BasicBullet {
     constructor(canvas) {
         super(canvas);
         this.seq = 0;
-        this.s = 7.5;
-        this.r = 6;
-        this.damage = 50;
+        this.s = 9;
+        this.r = 5.5;
+        this.damage = 35;
         this.collisionTime = 5;
         this.outOfView = false;
         this.bulletList = [];
-        this.fireUnit = 5;
         this.iconTxt = 'F';
         this.fireColor = '#9802fc';
         this.fireStrokeColor = '#610bfe';
         this.nolimit = false;
-        this.limit = 180;
+        this.limit = 200;
 
         this.rotateTerm = 3;
     };
@@ -24,8 +23,8 @@ class FastBullet extends BasicBullet {
         this.rotateTerm--;
         if (this.rotateTerm <= 0) {
             this.rotateTerm = 3;
-            return 15;
+            return 9;
         }
-        return 5;
+        return 3.2;
     };
 }

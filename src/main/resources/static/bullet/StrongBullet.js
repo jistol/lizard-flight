@@ -2,10 +2,10 @@ class StrongBullet extends BasicBullet {
     constructor(canvas) {
         super(canvas);
         this.seq = 0;
-        this.s = 7.5;
-        this.r = 8.5;
+        this.s = 6.5;
+        this.r = 9;
         this.fireTerm = 18;
-        this.damage = 100;
+        this.damage = 130;
         this.collisionTime = 7;
         this.outOfView = false;
         this.bulletList = [];

@@ -91,8 +91,10 @@ class PlayManager {
                     .filter(e => !e.outOfView)
                     .find(e => e.judgeCollision(b));
             if (enemy) {
-                res.score += enemy.score;
                 res.seqList.push(b.seq);
+                if (!enemy.isLive) {
+                    res.score += enemy.score;
+                }
             }
         });
 

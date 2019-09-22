@@ -3,9 +3,9 @@ class BasicBullet {
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         this.seq = 0;
-        this.s = 5;
+        this.s = 6.5;
         this.r = 5;
-        this.fireTerm = 15;
+        this.fireTerm = 13;
         this.fireUnit = 1;
         this.damage = 50;
         this.collisionTime = 7;

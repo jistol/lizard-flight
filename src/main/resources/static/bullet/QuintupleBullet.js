@@ -2,10 +2,10 @@ class QuintupleBullet extends BasicBullet {
     constructor(canvas) {
         super(canvas);
         this.seq = 0;
-        this.s = 6.5;
+        this.s = 7.5;
         this.r = 5;
-        this.damage = 35;
-        this.fireTerm = 15;
+        this.damage = 45;
+        this.fireTerm = 17;
         this.fireUnit = 5;
         this.collisionTime = 5;
         this.outOfView = false;

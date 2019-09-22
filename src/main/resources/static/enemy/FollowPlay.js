@@ -5,7 +5,7 @@ class FollowPlay {
         this.waitY = enemy.r + 25;
         this.initWait = (enemy.wait || 200);
         this.wait = this.initWait;
-        this.followX = 1;
+        this.followX = 1.7;
         this.startY = rHeight / 5;
         this.endY = rHeight - (rHeight/5);
     }

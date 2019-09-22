@@ -2,11 +2,11 @@ class WaveBullet extends BasicBullet {
     constructor(canvas) {
         super(canvas);
         this.seq = 0;
-        this.s = 4;
-        this.r = 5;
-        this.fireTerm = 12;
+        this.s = 7.5;
+        this.r = 4;
+        this.fireTerm = 17.5;
         this.fireUnit = 2;
-        this.damage = 55;
+        this.damage = 40;
         this.collisionTime = 5;
         this.outOfView = false;
         this.bulletList = [];
@@ -14,7 +14,7 @@ class WaveBullet extends BasicBullet {
         this.fireColor = '#9efc9a';
         this.fireStrokeColor = '#2ffebf';
         this.nolimit = false;
-        this.limit = 150;
+        this.limit = 100;
     };
 
     postConstructBullet = (bullet, fireSeq) => {

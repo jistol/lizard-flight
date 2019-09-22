@@ -95,7 +95,7 @@ class Viewer {
 
     judgeCollisionWithBullet = () => {
         this.lizard.bulletItemList.forEach(bulletItem => {
-            let result = this.playManager.judgeCollision(bulletItem.bulletList);
+            let result = this.playManager.judgeCollision(bulletItem.bulletList.filter(b => b.status == BulletStatus.fire));
             if (result && result.seqList && result.seqList.length > 0) {
                 bulletItem.setupCollision(result.seqList);
                 this.addScore(result.score);

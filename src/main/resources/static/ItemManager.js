@@ -56,7 +56,7 @@ class Item {
 
         this.x = Math.min(Math.max(x-50, 50 + this.r), rWidth - 50 - this.r);
         this.moveFun = animation(canvas.height, 3, 50, this.x);
-        this.fontSize = this.r * 1.7;
+        this.fontSize = this.r * 1.5;
         this.outOfView = false;
     }
 
